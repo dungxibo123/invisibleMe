@@ -107,7 +107,8 @@ def overlay_transparent(background_img, img_to_overlay_t, mask, x, y, overlay_si
     bg_img = cv2.cvtColor(bg_img, cv2.COLOR_RGBA2RGB)
 
     return bg_img
-
+fourcc = cv2.VideoWriter_fourcc(*'XVID')
+out = cv2.VideoWriter('output2.avi',fourcc,25.0, (900,600))
 cap = cv2.VideoCapture(0)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 900)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 600)
@@ -161,6 +162,7 @@ while(cap.isOpened()):
 
 	out_img = overlay_transparent(img_ori,invi,mask,0,0)
 	cv2.imshow("let see again final",out_img)
+	out.write(out_img)
     ## Generating the final output and writing
     #finalOutput = cv2.addWeighted(res1,1,res2,1,0)
     #out.write(finalOutput)
@@ -169,7 +171,6 @@ while(cap.isOpened()):
 	k = cv2.waitKey(1)
 	if k == 27:
 		break
-
-cap.release()	
+cap.release()
+out.release()
 cv2.destroyAllWindows()
-
