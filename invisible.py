@@ -108,11 +108,11 @@ def overlay_transparent(background_img, img_to_overlay_t, mask, x, y, overlay_si
 
     return bg_img
 fourcc = cv2.VideoWriter_fourcc(*'XVID')
-out = cv2.VideoWriter('output2.avi',fourcc,25.0, (900,600))
+out = cv2.VideoWriter('output2.avi',fourcc,24.0, (900,600))
 cap = cv2.VideoCapture(0)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 900)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 600)
-cap.set(cv2.CAP_PROP_FPS, 25)
+cap.set(cv2.CAP_PROP_FPS, 24)
 
 count = 0
 background = 0
@@ -131,7 +131,7 @@ while(cap.isOpened()):
 	ret, img = cap.read()
 	if not ret:
 		break
-	
+	bgg = img
 	#img = np.flip(img,axis=1)
 	img_ori = cv2.cvtColor(img.copy(), cv2.COLOR_BGR2RGB)
 	img = preprocess(img)
@@ -160,7 +160,7 @@ while(cap.isOpened()):
 	overlay_img = cv2.resize(invi, dsize=None, fx=1, fy=1)
 	resized_mask = cv2.resize(mask, dsize=None, fx=1, fy=1)
 
-	out_img = overlay_transparent(img_ori,invi,mask,0,0)
+	out_img = overlay_transparent(bgg,invi,mask,0,0)
 	cv2.imshow("let see again final",out_img)
 	out.write(out_img)
     ## Generating the final output and writing
